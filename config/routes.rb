@@ -2,10 +2,15 @@ Rails.application.routes.draw do
   root 'welcome#index'
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      get 'conversation/:id' => 'conversation#index'
       # API Endpoints
-      # CREATE MESSAGE
+      # GET CONVERSATION
+      get 'conversation/:id' => 'conversation#show'
       # CREATE CONVERSATION
+      post 'conversation' => 'conversation#create'
+      # CREATE MESSAGE
+      post 'conversation/:conversation_id' => 'message#create'
+      # GET MESSAGE
+      get 'message/:id' => 'message#show'
     end
   end
 end
