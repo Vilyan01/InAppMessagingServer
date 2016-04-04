@@ -1,5 +1,6 @@
 class Conversation < ActiveRecord::Base
 	has_many :messages
+	attr_accessor :last_message
 
 	def self.findByUserId(user_id)
 		tbl = Conversation.arel_table

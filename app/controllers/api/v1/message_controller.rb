@@ -11,11 +11,13 @@ module Api
 			end
 
 			def create
-				msg = Message.new
+				conv = Conversation.find(params[:conversation_id])
+				msg = conv.messages.new
 				msg.sender_id = params[:sender_id]
 				msg.display_name = params[:display_name]
 				msg.body = params[:body]
-				msg.conversation_id = params[:conversation_id]
+				puts msg
+				puts conv
 				if msg.save
 					render :json => msg, status: 201
 				else

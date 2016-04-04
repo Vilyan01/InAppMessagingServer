@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       post 'conversation/:conversation_id' => 'message#create'
       # GET MESSAGE
       get 'message/:id' => 'message#show'
+      # GET CONVERSATION MESSAGES
+      get 'conversation/:conversation_id/messages' => 'conversation#messages'
     end
   end
 end

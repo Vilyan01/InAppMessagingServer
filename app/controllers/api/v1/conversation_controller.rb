@@ -3,7 +3,7 @@ module Api
 		class ConversationController < ApplicationController
 			skip_before_filter :verify_authenticity_token
 			def show
-				render :json => {:conversations => Conversation.findByUserId(params[:id])}
+				render :json =>  get_conversation(params[:id]), :include => :last_message, :status => 200
 			end
 
 			def create
@@ -15,6 +15,23 @@ module Api
 				else
 					render :json => {:error => "Unable to create"}, :status => 400
 				end
+			end
+
+			def messages
+				con = Conversation.find(params[:conversation_id])
+				render :json => con.messages, :status => 200
+			end
+
+			private
+			# Get conversations and last message
+			def get_conversation(id)
+				convs = Conversation.findByUserId(params[:id])
+				r = Array.new
+				convs.each do |conv|
+					conv.last_message = conv.messages.last!
+					r << conv
+				end
+				return r
 			end
 		end
 	end
