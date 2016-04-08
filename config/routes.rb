@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       # API Endpoints
+      # CHECK CONVERSATION EXISTANCE
+      get 'conversation' => 'conversation#exists'
       # GET CONVERSATION
       get 'conversation/:id' => 'conversation#show'
       # CREATE CONVERSATION

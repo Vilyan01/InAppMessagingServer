@@ -22,6 +22,19 @@ module Api
 				render :json => con.messages, :status => 200
 			end
 
+			def exists
+				if params[:borrower_id] && params[:lender_id]
+					con = Conversation.findWithIds(params[:lender_id],params[:borrower_id])
+					if con
+						render :json => con, :status => 200
+					else
+						render :json => {:error => "Conversation does not exist"}, :status => 404
+					end
+				else
+					render :json => {:error => "Missing parameters"}, :status => 400
+				end
+			end
+
 			private
 			# Get conversations and last message
 			def get_conversation(id)
